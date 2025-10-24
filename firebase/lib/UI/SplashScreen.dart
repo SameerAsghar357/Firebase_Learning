@@ -4,10 +4,10 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase/UI/login.dart';
+import 'package:firebase/singup_options/login.dart';
 import 'package:firebase/UI/Services/splash_services.dart';
 import 'package:firebase/Utils/utils.dart';
-import 'package:firebase/rounded_Button.dart';
+import 'package:firebase/custom_widgets/rounded_Button.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});

@@ -1,31 +1,54 @@
+import 'package:firebase/realtime_database/addpostScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase/singup_options/login.dart';
+import 'package:firebase/Utils/utils.dart';
 
-class FetchdataScreen extends StatefulWidget {
-  FetchdataScreen({super.key});
+class Postscreen extends StatefulWidget {
+  const Postscreen({super.key});
 
   @override
-  State<FetchdataScreen> createState() => _FetchdataScreenState();
+  State<Postscreen> createState() => _PostscreenState();
 }
 
-class _FetchdataScreenState extends State<FetchdataScreen> {
+class _PostscreenState extends State<Postscreen> {
   final auth = FirebaseAuth.instance;
-
   final ref = FirebaseDatabase.instance.ref('Post');
-
   final searchController = TextEditingController();
+  final editController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fetch Data Screen', style: TextStyle(color: Colors.white)),
+        title: Text('Post Screen', style: TextStyle(color: Colors.white)),
         centerTitle: true,
+        backgroundColor: Colors.deepPurple,
+        actions: [
+          IconButton(
+            tooltip: 'SignOut',
+            onPressed: () {
+              auth
+                  .signOut()
+                  .then((value) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  })
+                  .onError((error, stacktrace) {
+                    Utils().toastmessage(error.toString());
+                  });
+            },
+            icon: Icon(Icons.logout_outlined, color: Colors.white),
+          ),
+        ],
       ),
       body: Column(
         children: [
+          SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: TextFormField(
@@ -45,6 +68,7 @@ class _FetchdataScreenState extends State<FetchdataScreen> {
               query: ref,
               itemBuilder: (context, snapshot, animation, index) {
                 final title = snapshot.child('title').value.toString();
+                final id = snapshot.child('id').value.toString();
 
                 if (searchController.text.isEmpty) {
                   return Padding(
@@ -61,31 +85,7 @@ class _FetchdataScreenState extends State<FetchdataScreen> {
                           return [
                             PopupMenuItem(
                               onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text('Update'),
-                                      content: TextFormField(
-                                        decoration: InputDecoration(
-                                          hintText: 'Write Here',
-                                        ),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          child: Text('Cancel'),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text('Update'),
-                                          onPressed: () {},
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+                                showMyDialog('Update', title, id);
                               },
                               child: ListTile(
                                 leading: Icon(Icons.edit),
@@ -94,31 +94,15 @@ class _FetchdataScreenState extends State<FetchdataScreen> {
                             ),
                             PopupMenuItem(
                               onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text('Update'),
-                                      content: TextFormField(
-                                        decoration: InputDecoration(
-                                          hintText: 'Write Here',
-                                        ),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          child: Text('Cancel'),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text('Update'),
-                                          onPressed: () {},
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+                                ref
+                                    .child(id)
+                                    .remove()
+                                    .then((onValue) {
+                                      Utils().toastmessage('Removed');
+                                    })
+                                    .onError((error, stackTrace) {
+                                      Utils().toastmessage(error.toString());
+                                    });
                               },
                               child: ListTile(
                                 leading: Icon(Icons.delete),
@@ -147,31 +131,7 @@ class _FetchdataScreenState extends State<FetchdataScreen> {
                           return [
                             PopupMenuItem(
                               onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text('Update'),
-                                      content: TextFormField(
-                                        decoration: InputDecoration(
-                                          hintText: 'Write Here',
-                                        ),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          child: Text('Cancel'),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text('Update'),
-                                          onPressed: () {},
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+                                showMyDialog('Update', title, id);
                               },
                               child: ListTile(
                                 leading: Icon(Icons.edit),
@@ -180,31 +140,15 @@ class _FetchdataScreenState extends State<FetchdataScreen> {
                             ),
                             PopupMenuItem(
                               onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text('Update'),
-                                      content: TextFormField(
-                                        decoration: InputDecoration(
-                                          hintText: 'Write Here',
-                                        ),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          child: Text('Cancel'),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text('Update'),
-                                          onPressed: () {},
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+                                ref
+                                    .child(id)
+                                    .remove()
+                                    .then((onValue) {
+                                      Utils().toastmessage('Removed');
+                                    })
+                                    .onError((error, stackTrace) {
+                                      Utils().toastmessage(error.toString());
+                                    });
                               },
                               child: ListTile(
                                 leading: Icon(Icons.delete),
@@ -224,9 +168,58 @@ class _FetchdataScreenState extends State<FetchdataScreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Addpostscreen()),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  Future<void> showMyDialog(String title, String value, String id) async {
+    editController.text = value;
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: TextFormField(
+            controller: editController,
+            decoration: InputDecoration(hintText: value),
+          ),
+          actions: [
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text(title),
+              onPressed: () {
+                ref
+                    .child(id)
+                    .update({'title': editController.text.toString()})
+                    .then((onValue) {
+                      Navigator.pop(context);
+                      Utils().toastmessage('Updated');
+                    })
+                    .onError((error, stackTrace) {
+                      Utils().toastmessage(error.toString());
+                    });
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
+
 
 //Column(
         // children: [
@@ -282,3 +275,4 @@ class _FetchdataScreenState extends State<FetchdataScreen> {
           //     style: TextStyle(fontSize: 18),
           //   ),
           // ),
+

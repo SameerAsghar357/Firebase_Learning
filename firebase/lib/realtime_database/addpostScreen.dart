@@ -1,10 +1,8 @@
 // ignore_for_file: must_be_immutable, unused_import
 
 import 'dart:async';
-
-import 'package:firebase/UI/fetchdata.dart';
 import 'package:firebase/Utils/utils.dart';
-import 'package:firebase/rounded_Button.dart';
+import 'package:firebase/custom_widgets/rounded_Button.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -51,12 +49,13 @@ class _AddpostscreenState extends State<Addpostscreen> {
                   loading = true;
                 });
                 try {
+                  final id = DateTime.now().millisecondsSinceEpoch.toString();
                   databaseref
-                      .child(DateTime.now().millisecondsSinceEpoch.toString())
+                      .child(id)
                       // .child('comment')
                       .set({
                         'title': postController.text.toString(),
-                        'id': DateTime.now().millisecondsSinceEpoch.toString(),
+                        'id': id,
                       })
                       .then((value) {
                         setState(() {

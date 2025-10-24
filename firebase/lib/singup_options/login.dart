@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase/UI/phone_number.dart';
-import 'package:firebase/UI/PostScreen/postScreen.dart';
-import 'package:firebase/UI/signup.dart';
+import 'package:firebase/singup_options/phone_number.dart';
+import 'package:firebase/realtime_database/postScreen.dart';
+import 'package:firebase/singup_options/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase/Utils/utils.dart';
-import 'package:firebase/rounded_Button.dart';
+import 'package:firebase/custom_widgets/rounded_Button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
