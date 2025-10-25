@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import, avoid_print
 
+import 'package:firebase/firestore_database/firestore_list.dart';
+import 'package:firebase/upload_firebase/image_uploading.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase/UI/SplashScreen.dart';
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home: Splashscreen(),
+      home: ImageUploadingScreen(),
     );
   }
 }

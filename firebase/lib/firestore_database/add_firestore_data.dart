@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/Utils/utils.dart';
+import 'package:firebase/custom_widgets/rounded_Button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_practice/RoundedButton.dart';
-import 'package:firebase_practice/Utils/utils_services.dart';
 import 'package:flutter/material.dart';
 
 class addFirestoreDataScreen extends StatefulWidget {
@@ -38,10 +38,10 @@ class _addFirestoreDataScreenState extends State<addFirestoreDataScreen> {
             ),
           ),
 
-          Roundedbutton(
+          RoundedButton(
             loading: loading,
             title: 'Add Post',
-            ontap: () {
+            onTap: () {
               String id = DateTime.now().millisecondsSinceEpoch.toString();
               setState(() {
                 loading = true;

@@ -15,19 +15,22 @@ class RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 50,
-        decoration: BoxDecoration(
-          color: Colors.deepPurple,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Center(
-          child:
-              loading
-                  ? CircularProgressIndicator(color: Colors.white)
-                  : Text(title, style: TextStyle(color: Colors.white)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.deepPurple,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child:
+                loading
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : Text(title, style: TextStyle(color: Colors.white)),
+          ),
         ),
       ),
     );
